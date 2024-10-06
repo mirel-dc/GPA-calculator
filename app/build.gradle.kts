@@ -55,6 +55,8 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":feature:calculator"))
 
+    implementation(libs.androidx.navigation.compose)
+
     //DI
     implementation(libs.koin.core)
     implementation(libs.koin.android)
