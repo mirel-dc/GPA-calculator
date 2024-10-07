@@ -1,0 +1,20 @@
+CREATE TABLE courseEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    credits INTEGER NOT NULL,
+    grade INTEGER,
+    semester INTEGER
+);
+
+insertCourse:
+INSERT INTO courseEntity(name, credits, grade, semester)
+VALUES (?,?,?,?);
+
+getCoursesBySemester:
+SELECT *
+FROM courseEntity
+WHERE semester = :semester;
+
+getAllCourses:
+SELECT *
+FROM courseEntity;

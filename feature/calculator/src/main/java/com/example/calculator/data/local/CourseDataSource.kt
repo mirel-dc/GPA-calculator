@@ -1,0 +1,20 @@
+package com.example.calculator.data.local
+
+import com.example.gpacalculator.db.CourseEntity
+import kotlinx.coroutines.flow.Flow
+
+interface CourseDataSource {
+
+    fun getCoursesBySemester(semester: Long): Flow<List<CourseEntity>>
+
+    fun getAllCourses(): Flow<List<CourseEntity>>
+
+    suspend fun deleteAllCourses()
+
+    suspend fun insertCourse(
+        name: String,
+        credits: Long,
+        grade: Long?,
+        semester: Long?,
+    )
+}

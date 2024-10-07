@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-
+    id("app.cash.sqldelight") version "2.0.2"
 }
 
 android {
@@ -43,6 +43,20 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
+    //DI
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    //Coroutines
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    //DB
+    implementation(libs.coroutines.extensions.jvm)
+    implementation(libs.sqldelight.android.driver)
+    implementation(libs.sqldelight.coroutines)
+
     //UI
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -52,6 +66,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+
     debugImplementation(libs.ui.tooling)
 
     implementation(libs.androidx.core.ktx)
@@ -60,4 +75,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+sqldelight {
+    databases {
+        create("CoursesDatabase") {
+            packageName.set("com.example.calculator")
+        }
+    }
 }
