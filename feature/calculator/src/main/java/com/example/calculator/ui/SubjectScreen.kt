@@ -1,5 +1,6 @@
 package com.example.calculator.ui
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +39,7 @@ import com.example.calculator.domain.Course
 import com.example.calculator.presentation.SubjectViewModel
 import com.example.core_ui.theme.DefaultPadding
 import com.example.core_ui.theme.DefaultPadding2x
+import com.example.gpacalculator.db.CourseEntity
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.mp.KoinPlatform
@@ -53,11 +56,8 @@ fun SubjectScreen(
 
     val viewmodel = koinViewModel<SubjectViewModel>()
 
+    val subjects by viewmodel.subjects.collectAsState()
 
-    // Список из 6 пустых элементов
-    var subjects by remember {
-        viewmodel.list
-    }
 
     Column(
         modifier = Modifier
@@ -79,9 +79,10 @@ fun SubjectScreen(
                 SubjectItem(
                     subject = subjects[index],
                     onSubjectChange = { updatedSubject ->
-                        subjects = subjects.toMutableList().apply {
-                            this[index] = updatedSubject
-                        }
+                        Log.d("LazyCol", updatedSubject.toString())
+//                        subjects = subjects.toMutableList().apply {
+//                            this[index] = updatedSubject
+//                        }
                     }
                 )
             }
@@ -104,7 +105,7 @@ fun SubjectScreen(
 
 @Composable
 fun SubjectItem(
-    subject: Course,
+    subject: CourseEntity,
     onSubjectChange: (Course) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) } // Для DropdownMenu
@@ -122,7 +123,7 @@ fun SubjectItem(
             TextField(
                 value = subject.name,
                 onValueChange = {
-                    onSubjectChange(subject.copy(name = it))
+                    //onSubjectChange(subject.copy(name = it))
                 },
                 label = { Text("Subject") },
                 modifier = Modifier.weight(2f)
@@ -135,7 +136,7 @@ fun SubjectItem(
                 value = subject.credits.toString(),
                 onValueChange = { newCredits ->
                     val parsedCredits = newCredits.toIntOrNull() ?: subject.credits
-                    onSubjectChange(subject.copy(credits = parsedCredits))
+                    //onSubjectChange(subject.copy(credits = parsedCredits))
                 },
                 label = { Text("Credits") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -166,7 +167,7 @@ fun SubjectItem(
                     (1..5).forEach { grade ->
                         DropdownMenuItem(
                             onClick = {
-                                onSubjectChange(subject.copy(grade = grade))
+                                //onSubjectChange(subject.copy(grade = grade))
                                 expanded = false
                             },
                             text = {
@@ -178,15 +179,4 @@ fun SubjectItem(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSubjectScreen() {
-    SubjectScreen(
-        semester = 1,
-        onBackClick = {},
-        onAddSubjectClick = {}
-    )
 }

@@ -3,6 +3,7 @@ package com.example.calculator.data.local
 import com.example.gpacalculator.db.CourseEntity
 import kotlinx.coroutines.flow.Flow
 
+//По хорошему закинуть в domain и сделать маппер для CourseEntity
 interface CourseDataSource {
 
     fun getCoursesBySemester(semester: Long): Flow<List<CourseEntity>>

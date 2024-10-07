@@ -1,7 +1,7 @@
 package com.example.calculator.domain
 
 class CalculateGPAUseCase() {
-    operator fun invoke(courses: List<Course>) : Double{
+    operator fun invoke(courses: List<Course>): Double {
         var totalGradePoints = 0
         var totalCredits = 0
 

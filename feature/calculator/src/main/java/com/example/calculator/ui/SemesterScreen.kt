@@ -15,8 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.calculator.presentation.SemesterViewModel
 import com.example.core_ui.theme.DefaultPadding
 import com.example.core_ui.theme.DefaultPadding2x
+import org.koin.compose.KoinContext
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
@@ -25,7 +28,8 @@ fun SemesterScreen(
     onSemesterClick: (Int) -> Unit,
     onResetClick: () -> Unit
 ) {
-    //val viewmodel = koinViewModel<SemesterViewModel>()
+    KoinContext {}
+    val viewmodel = koinViewModel<SemesterViewModel>()
 
     val semesters = listOf(
         "Semester 1", "Semester 2", "Semester 3", "Semester 4",
@@ -45,7 +49,7 @@ fun SemesterScreen(
 
         // Кнопка для обнуления данных
         Button(
-            onClick = onResetClick,
+            onClick = { viewmodel.resetAllData() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(DefaultPadding2x)
@@ -75,10 +79,4 @@ fun SemesterItem(
             style = MaterialTheme.typography.bodyMedium
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSemesterScreen() {
-    SemesterScreen(onSemesterClick = {}, onResetClick = {})
 }

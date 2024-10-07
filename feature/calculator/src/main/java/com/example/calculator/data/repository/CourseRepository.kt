@@ -20,7 +20,7 @@ class CourseRepository(private val queries: CoursesQueries) : CourseDataSource {
     }
 
     override suspend fun deleteAllCourses() {
-        TODO()
+        queries.deleteAll()
     }
 
     override suspend fun insertCourse(name: String, credits: Long, grade: Long?, semester: Long?) {
