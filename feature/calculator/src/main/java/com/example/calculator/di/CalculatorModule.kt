@@ -6,4 +6,5 @@ fun calculatorModule() = module {
     includes(dataModule())
     includes(sqlDelightModule())
     includes(dataModule())
+    includes(domainModule())
 }

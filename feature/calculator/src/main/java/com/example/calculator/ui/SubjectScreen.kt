@@ -34,8 +34,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.calculator.domain.Course
+import com.example.calculator.presentation.SubjectViewModel
 import com.example.core_ui.theme.DefaultPadding
 import com.example.core_ui.theme.DefaultPadding2x
+import org.koin.compose.KoinContext
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.mp.KoinPlatform
 
 @Composable
 fun SubjectScreen(
@@ -43,11 +47,16 @@ fun SubjectScreen(
     onAddSubjectClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
+    KoinContext {
+        KoinPlatform.getKoin()
+    }
+
+    val viewmodel = koinViewModel<SubjectViewModel>()
+
+
     // Список из 6 пустых элементов
     var subjects by remember {
-        mutableStateOf(
-            MutableList(6) { Course("", 3, 5) }
-        )
+        viewmodel.list
     }
 
     Column(

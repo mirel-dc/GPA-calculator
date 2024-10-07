@@ -46,6 +46,8 @@ dependencies {
     //DI
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.compose.viewmodel)
+    implementation(libs.koin.compose)
 
     //Coroutines
     implementation(libs.androidx.lifecycle.livedata)
@@ -59,6 +61,7 @@ dependencies {
 
     //UI
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
