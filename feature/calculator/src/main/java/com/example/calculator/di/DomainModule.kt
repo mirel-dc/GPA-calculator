@@ -51,6 +51,8 @@ internal fun domainModule() = module {
     viewModel<SemesterViewModel> {
         SemesterViewModel(
             get(),
+            get(),
+            get()
         )
     }
 }

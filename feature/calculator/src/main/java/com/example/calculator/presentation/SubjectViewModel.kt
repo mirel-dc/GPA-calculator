@@ -11,7 +11,6 @@ import com.example.gpacalculator.db.CourseEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class SubjectViewModel(
@@ -24,17 +23,6 @@ class SubjectViewModel(
 
     private val _subjects = MutableStateFlow<List<CourseEntity>>(emptyList())
     val subjects: StateFlow<List<CourseEntity>> get() = _subjects
-//
-//
-//    init {
-//        viewModelScope.launch {
-//            getAllCoursesUseCase()
-//                .stateIn(viewModelScope)
-//                .collect { courseEntities ->
-//                    _subjects.value = courseEntities
-//                }
-//        }
-//    }
 
     fun initializeSubjects(semester: Long) {
         viewModelScope.launch {

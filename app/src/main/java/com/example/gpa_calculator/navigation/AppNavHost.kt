@@ -1,6 +1,5 @@
 package com.example.gpa_calculator.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -20,7 +19,6 @@ fun AppNavHost(
         composable(NavRoutes.SEMESTER_SCREEN) {
             SemesterScreen(
                 onSemesterClick = { semester ->
-                    Log.d("ABC", semester.toString())
                     navController.navigate("${NavRoutes.SUBJECT_SCREEN}/$semester")
                 },
                 onResetClick = { /* обработка сброса */ }

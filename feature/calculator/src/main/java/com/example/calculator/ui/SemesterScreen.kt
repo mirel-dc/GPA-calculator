@@ -2,6 +2,7 @@ package com.example.calculator.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,13 +13,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.calculator.presentation.SemesterViewModel
 import com.example.core_ui.theme.DefaultPadding
 import com.example.core_ui.theme.DefaultPadding2x
-import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -28,28 +29,42 @@ fun SemesterScreen(
     onSemesterClick: (Int) -> Unit,
     onResetClick: () -> Unit
 ) {
-    KoinContext {}
-    val viewmodel = koinViewModel<SemesterViewModel>()
 
-    val semesters = listOf(
-        "Semester 1", "Semester 2", "Semester 3", "Semester 4",
-        "Semester 5", "Semester 6", "Semester 7", "Semester 8"
-    )
+    val viewModel = koinViewModel<SemesterViewModel>()
+    val gpaState by viewModel.gpa
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Список семестров
-        LazyColumn {
-            items(semesters.size) { index ->
+        Text(
+            textAlign = TextAlign.Center,
+            text = "GPA: $gpaState",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier
+                .padding(DefaultPadding2x)
+                .fillMaxWidth()
+        )
+
+        Spacer(
+            modifier = Modifier
+                .padding(DefaultPadding)
+        )
+
+        // Список семестров, занимающий оставшееся пространство
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f) // Это заставляет LazyColumn занимать оставшееся пространство
+                .fillMaxWidth()
+        ) {
+            items(viewModel.semesters.size) { index ->
                 SemesterItem(
-                    semesterName = semesters[index],
-                    onClick = { onSemesterClick(index + 1) }
+                    semesterName = viewModel.semesters[index],
+                    onClick = { onSemesterClick(index + 1) },
                 )
             }
         }
 
-        // Кнопка для обнуления данных
+        // Кнопка для обнуления данных, всегда находящаяся внизу
         Button(
-            onClick = { viewmodel.resetAllData() },
+            onClick = { viewModel.resetAllData() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(DefaultPadding2x)

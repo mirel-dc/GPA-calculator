@@ -1,7 +1,6 @@
 package com.example.calculator.domain
 
 import com.example.calculator.data.local.CourseDataSource
-import com.example.calculator.data.repository.CourseRepository
 import com.example.gpacalculator.db.CourseEntity
 import kotlinx.coroutines.flow.Flow
 
