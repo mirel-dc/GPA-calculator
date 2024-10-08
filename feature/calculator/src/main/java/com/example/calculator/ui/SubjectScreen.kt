@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,9 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.calculator.domain.Course
 import com.example.calculator.presentation.SubjectViewModel
 import com.example.core_ui.theme.DefaultPadding
 import com.example.core_ui.theme.DefaultPadding2x
@@ -47,16 +46,18 @@ import org.koin.mp.KoinPlatform
 @Composable
 fun SubjectScreen(
     semester: Int,
-    onAddSubjectClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
     KoinContext {
         KoinPlatform.getKoin()
     }
 
-    val viewmodel = koinViewModel<SubjectViewModel>()
+    val viewModel = koinViewModel<SubjectViewModel>()
+    val subjects by viewModel.subjects.collectAsState()
 
-    val subjects by viewmodel.subjects.collectAsState()
+    LaunchedEffect(semester) {
+        viewModel.initializeSubjects(semester.toLong())
+    }
 
 
     Column(
@@ -79,26 +80,11 @@ fun SubjectScreen(
                 SubjectItem(
                     subject = subjects[index],
                     onSubjectChange = { updatedSubject ->
-                        Log.d("LazyCol", updatedSubject.toString())
-//                        subjects = subjects.toMutableList().apply {
-//                            this[index] = updatedSubject
-//                        }
+                        Log.d("Updating List", updatedSubject.toString())
+                        viewModel.updateSubject(updatedSubject)
                     }
                 )
             }
-        }
-
-        Spacer(modifier = Modifier.height(DefaultPadding2x))
-
-        Button(
-            onClick = onAddSubjectClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(DefaultPadding)
-        ) {
-            Text(
-                text = "Add new Subject"
-            )
         }
     }
 }
@@ -106,8 +92,10 @@ fun SubjectScreen(
 @Composable
 fun SubjectItem(
     subject: CourseEntity,
-    onSubjectChange: (Course) -> Unit
+    onSubjectChange: (CourseEntity) -> Unit
 ) {
+
+    var name by remember { mutableStateOf(subject.name) }
     var expanded by remember { mutableStateOf(false) } // Для DropdownMenu
 
     Card(
@@ -121,12 +109,14 @@ fun SubjectItem(
         Row(modifier = Modifier.padding(DefaultPadding2x)) {
             // TextField для ввода названия предмета
             TextField(
-                value = subject.name,
-                onValueChange = {
-                    //onSubjectChange(subject.copy(name = it))
+                value = name,
+                onValueChange = { newName ->
+                    Log.d("NAME", newName)
+                    name = newName
+                    onSubjectChange(subject.copy(name = newName))
                 },
                 label = { Text("Subject") },
-                modifier = Modifier.weight(2f)
+                modifier = Modifier.weight(2f),
             )
 
             Spacer(modifier = Modifier.width(DefaultPadding))
@@ -135,8 +125,8 @@ fun SubjectItem(
             TextField(
                 value = subject.credits.toString(),
                 onValueChange = { newCredits ->
-                    val parsedCredits = newCredits.toIntOrNull() ?: subject.credits
-                    //onSubjectChange(subject.copy(credits = parsedCredits))
+                    val parsedCredits = newCredits.toLongOrNull() ?: subject.credits
+                    onSubjectChange(subject.copy(credits = parsedCredits))
                 },
                 label = { Text("Credits") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -164,14 +154,14 @@ fun SubjectItem(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
-                    (1..5).forEach { grade ->
+                    (1..5).forEach { newGrade ->
                         DropdownMenuItem(
                             onClick = {
-                                //onSubjectChange(subject.copy(grade = grade))
+                                onSubjectChange(subject.copy(grade = newGrade.toLong()))
                                 expanded = false
                             },
                             text = {
-                                Text(text = grade.toString())
+                                Text(text = newGrade.toString())
                             }
                         )
                     }

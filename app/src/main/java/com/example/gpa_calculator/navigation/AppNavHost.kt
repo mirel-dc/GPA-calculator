@@ -15,13 +15,13 @@ import com.example.calculator.ui.SubjectScreen
 fun AppNavHost(
     navController: NavHostController = rememberNavController()
 ) {
-    NavHost(navController = navController, startDestination = NavRoutes.SemesterScreen) {
+    NavHost(navController = navController, startDestination = NavRoutes.SEMESTER_SCREEN) {
         // Экран семестров
-        composable(NavRoutes.SemesterScreen) {
+        composable(NavRoutes.SEMESTER_SCREEN) {
             SemesterScreen(
                 onSemesterClick = { semester ->
                     Log.d("ABC", semester.toString())
-                    navController.navigate("${NavRoutes.SubjectScreen}/$semester")
+                    navController.navigate("${NavRoutes.SUBJECT_SCREEN}/$semester")
                 },
                 onResetClick = { /* обработка сброса */ }
             )
@@ -29,7 +29,7 @@ fun AppNavHost(
 
         // Экран предметов с передачей аргумента номера семестра
         composable(
-            route = "${NavRoutes.SubjectScreen}/{semester}",
+            route = "${NavRoutes.SUBJECT_SCREEN}/{semester}",
             arguments = listOf(navArgument("semester") {
                 type = NavType.IntType // тип аргумента
             })
@@ -38,7 +38,6 @@ fun AppNavHost(
             val semester = backStackEntry.arguments?.getInt("semester") ?: 0
             SubjectScreen(
                 semester = semester,
-                onAddSubjectClick = { /* обработка добавления предмета */ },
                 onBackClick = { navController.popBackStack() }
             )
         }

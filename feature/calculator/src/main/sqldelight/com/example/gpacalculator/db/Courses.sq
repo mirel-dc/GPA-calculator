@@ -21,3 +21,8 @@ FROM courseEntity;
 
 deleteAll:
 DELETE FROM courseEntity;
+
+updateCourse:
+UPDATE courseEntity
+SET name = ?, credits = ?, grade = ?, semester = ?
+WHERE id = ?;

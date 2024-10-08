@@ -18,4 +18,12 @@ interface CourseDataSource {
         grade: Long?,
         semester: Long?,
     )
+
+    suspend fun updateCourse(
+        id: Long,
+        name: String,
+        credits: Long,
+        grade: Long?,
+        semester: Long?,
+    )
 }

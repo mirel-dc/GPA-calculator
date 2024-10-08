@@ -5,6 +5,7 @@ import com.example.calculator.domain.ClearAllDataUseCase
 import com.example.calculator.domain.GetAllCoursesUseCase
 import com.example.calculator.domain.GetCoursesBySemesterUseCase
 import com.example.calculator.domain.InsertCourseUseCase
+import com.example.calculator.domain.UpdateCourseUseCase
 import com.example.calculator.presentation.SemesterViewModel
 import com.example.calculator.presentation.SubjectViewModel
 import org.koin.core.module.dsl.viewModel
@@ -32,9 +33,14 @@ internal fun domainModule() = module {
         GetCoursesBySemesterUseCase(get())
     }
 
+    single<UpdateCourseUseCase> {
+        UpdateCourseUseCase(get())
+    }
+
 
     viewModel<SubjectViewModel> {
         SubjectViewModel(
+            get(),
             get(),
             get(),
             get(),

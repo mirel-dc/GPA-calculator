@@ -28,4 +28,22 @@ class CourseRepository(private val queries: CoursesQueries) : CourseDataSource {
             queries.insertCourse(name = name, credits = credits, grade = grade, semester = semester)
         }
     }
+
+    override suspend fun updateCourse(
+        id: Long,
+        name: String,
+        credits: Long,
+        grade: Long?,
+        semester: Long?
+    ) {
+        withContext(Dispatchers.IO) {
+            queries.updateCourse(
+                name = name,
+                credits = credits,
+                grade = grade,
+                semester = semester,
+                id = id
+            )
+        }
+    }
 }
