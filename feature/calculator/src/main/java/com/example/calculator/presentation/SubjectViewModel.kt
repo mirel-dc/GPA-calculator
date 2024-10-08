@@ -14,10 +14,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class SubjectViewModel(
-    private val calculateGPAUseCase: CalculateGPAUseCase,
     private val insertCourseUseCase: InsertCourseUseCase,
     private val getCoursesBySemesterUseCase: GetCoursesBySemesterUseCase,
-    private val getAllCoursesUseCase: GetAllCoursesUseCase,
     private val updateCourseUseCase: UpdateCourseUseCase,
 ) : ViewModel() {
 
@@ -44,7 +42,7 @@ class SubjectViewModel(
         }
     }
 
-    fun getSubjectsForSemester(semester: Long) {
+    private fun getSubjectsForSemester(semester: Long) {
         viewModelScope.launch {
             getCoursesBySemesterUseCase(semester)
                 .collect { subjects ->
@@ -53,23 +51,6 @@ class SubjectViewModel(
         }
     }
 
-
-    fun addSubject(
-        name: String,
-        credits: Long,
-        grade: Long,
-        semester: Long
-    ) {
-        viewModelScope.launch {
-            insertCourseUseCase(
-                name = name,
-                credits = credits,
-                grade = grade,
-                semester = semester
-            )
-            //_subjects.value += newSubject
-        }
-    }
 
     fun updateSubject(updatedSubject: CourseEntity) {
         viewModelScope.launch {

@@ -42,7 +42,7 @@ class SemesterViewModel(
         return flatMapConcat { it.asFlow() }.toList()
     }
 
-    suspend fun calculateGPA() {
+    private suspend fun calculateGPA() {
         getAllCoursesUseCase().collect { courses ->
             // Здесь мы собираем Flow и вычисляем GPA
             val courseList = courses // Получаем список курсов

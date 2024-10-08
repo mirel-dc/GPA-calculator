@@ -43,8 +43,6 @@ internal fun domainModule() = module {
             get(),
             get(),
             get(),
-            get(),
-            get(),
         )
     }
 
