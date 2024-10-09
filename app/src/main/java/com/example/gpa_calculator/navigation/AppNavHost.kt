@@ -33,10 +33,16 @@ fun AppNavHost(
                 type = NavType.IntType // тип аргумента
             })
         ) { backStackEntry ->
-            // Получаем номер семестра из аргументов
             val semester = backStackEntry.arguments?.getInt("semester") ?: 0
             SubjectScreen(
                 semester = semester,
+                onBackClick = { navController.popBackStack() }
+            )
+        }
+
+        // Новый экран новостей
+        composable(NavRoutes.NEWS_SCREEN) {
+            NewsScreen(
                 onBackClick = { navController.popBackStack() }
             )
         }

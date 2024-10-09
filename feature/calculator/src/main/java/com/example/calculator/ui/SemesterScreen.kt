@@ -71,6 +71,8 @@ fun SemesterScreen(
         ) {
             Text(text = "Reset All Data")
         }
+
+        Spacer(modifier = Modifier.padding(DefaultPadding2x * 2))
     }
 }
 

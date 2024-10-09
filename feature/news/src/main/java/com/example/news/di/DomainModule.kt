@@ -11,6 +11,8 @@ internal fun domainModule() = module {
     }
 
     viewModel<NewsViewModel> {
-        get()
+        NewsViewModel(
+            get()
+        )
     }
 }

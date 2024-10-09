@@ -57,11 +57,13 @@ dependencies {
     implementation(project(":feature:news"))
 
     implementation(libs.androidx.navigation.compose)
+    implementation("androidx.compose.material:material-android:1.7.3")
 
     //DI
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.material.icons.core.android)
 
 }

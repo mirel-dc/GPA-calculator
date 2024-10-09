@@ -26,6 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun NewsScreen(
     modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
 ) {
     val viewModel = koinViewModel<NewsViewModel>()
 
@@ -35,7 +36,11 @@ fun NewsScreen(
         viewModel.loadNews() // Загружаем новости при первом запуске
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         Text(
             text = "Top News",
             style = MaterialTheme.typography.headlineMedium,

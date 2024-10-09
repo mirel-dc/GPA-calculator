@@ -2,6 +2,7 @@ package com.example.gpa_calculator
 
 import android.app.Application
 import com.example.calculator.di.calculatorModule
+import com.example.news.di.newsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,7 +17,8 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
-                    calculatorModule()
+                    calculatorModule(),
+                    newsModule()
                 )
             )
         }
