@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.calculator.ui.SemesterScreen
 import com.example.calculator.ui.SubjectScreen
+import com.example.news.ui.NewsScreen
 
 @Composable
 fun AppNavHost(

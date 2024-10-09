@@ -54,6 +54,7 @@ dependencies {
 
     implementation(project(":core-ui"))
     implementation(project(":feature:calculator"))
+    implementation(project(":feature:news"))
 
     implementation(libs.androidx.navigation.compose)
 
