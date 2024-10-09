@@ -1,5 +1,6 @@
 package com.example.news.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.domain.GetNewsUseCase
@@ -17,13 +18,17 @@ class NewsViewModel(
 
     fun loadNews() {
         viewModelScope.launch {
-            try {
-                val news = getNewsUseCase()
-                _newsState.value = news
-            } catch (e: Exception) {
-                // Обработка ошибки
-                _newsState.value = emptyList()
-            }
+            _newsState.value = getNewsUseCase()
+//            try {
+//                Log.d("VM", "Entered try")
+//                val news = getNewsUseCase()
+//                _newsState.value = news
+//                Log.d("VM", _newsState.value[1].toString())
+//            } catch (e: Exception) {
+//                // Обработка ошибки
+//                Log.d("VM", "in catch")
+//                _newsState.value = emptyList()
+//            }
         }
     }
 }
